@@ -12,10 +12,9 @@ class CacheFlag
 
     protected $connection;
 
-    public function __construct($options, $scope)
+    public function __construct($options)
     {
         $this->options = $options;
-        $this->scope = $scope;
 
         $config = $this->options['database'];
 
@@ -32,7 +31,7 @@ class CacheFlag
     public function flag($key)
     {
         $flag = [];
-        $flag['scope'] = $this->scope;
+        $flag['scope'] = $this->options['scope'];
         $flag['keyname'] = $key;
         $flag['createdTime'] = time();
 
