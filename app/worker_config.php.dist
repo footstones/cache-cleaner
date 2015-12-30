@@ -1,0 +1,40 @@
+<?php
+
+return [
+    'bootstrap' => __DIR__ . '/worker_bootstrap.php',
+    'message_server' => [
+        'host' => '127.0.0.1',
+        'port' => 11300,
+    ],
+    'tubes' => [
+        'cache_cleaner' => [
+            'worker_num' => 1, 
+            'class' => 'Footstones\\CacheCleaner\\CleanWorker',
+            'database' => [
+                'driver' => 'pdo_mysql',
+                'host' => '127.0.0.1',
+                'port' => 3306,
+                'name' => 'cache_cleaner',
+                'user' => 'root',
+                'password' => '',
+                'charset' => 'utf8',
+            ],
+            'scops' => [
+                'default' => [
+                    'host' => '127.0.0.1',
+                    'port' => 6379,
+                    'timeout' => 1,
+                    'reserved' => null,
+                    'retry_interval' => 100,
+                ]
+
+            ]
+        ],
+    ],
+    'log_path' => __DIR__ . '/../var/log/plumber.log',
+    'output_path' => __DIR__ . '/../var/log/plumber.output.log',
+    'pid_path' => __DIR__ . '/../var/log/plumber.pid',
+    'daemonize' => 1,
+    'reserve_timeout' => 10, 
+    'execute_timeout' => 60,
+];

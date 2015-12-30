@@ -1,5 +1,4 @@
 <?php
-
 namespace Footstones\CacheCleaner;
 
 use Doctrine\DBAL\DriverManager;

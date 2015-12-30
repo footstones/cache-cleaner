@@ -1,9 +1,7 @@
 <?php
-
 namespace Footstones\CacheCleaner\Tests;
 
 use Footstones\CacheCleaner\CacheFlag;
-
 
 class CacheFlagTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,6 +15,3 @@ class CacheFlagTest extends \PHPUnit_Framework_TestCase
     }
 
 }
-
-
-
