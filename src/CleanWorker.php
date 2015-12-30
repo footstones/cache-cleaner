@@ -11,6 +11,8 @@ class CleanWorker implements IWorker
 
     protected $scopeRedis = [];
 
+    const DELAY = 2;
+
     public function __construct($tubeName, $config)
     {
         $this->tubeName = $tubeName;
@@ -71,11 +73,11 @@ class CleanWorker implements IWorker
             }
 
             $this->logger && $this->logger->info($message);
+            return array('code' => IWorker::RETRY, 'delay'=> self::DELAY);
 
-            return IWorker::RETRY;
         } catch (\Exception $e) {
             $this->logger && $this->logger->error("job #{$job['id']} throw exception: {$e->getMessage()}", $job);
-            return IWorker::RETRY;
+            return array('code' => IWorker::RETRY, 'delay'=> self::DELAY);
         }
 
     }
