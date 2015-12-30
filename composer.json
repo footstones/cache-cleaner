@@ -1,0 +1,31 @@
+{
+    "name": "footstones/cache-cleaner",
+    "type": "library",
+    "description": "Cache Cleaner",
+    "keywords": ["cache"],
+    "homepage": "https://github.com/footstones/cache-cleaner",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": { 
+            "Footstones\\CacheCleaner\\": "src/",
+            "Footstones\\CacheCleaner\\Tests\\": "tests/"
+        }
+    },
+    "config" : {
+        "bin-dir" : "bin"
+    },
+    "authors": [
+        {
+            "name": "Wellming Li",
+            "email": "wellming.li@howzhi.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.1",
+        "ext-swoole": ">=1.7.17",
+        "doctrine/dbal": ">=2.5.0",
+        "psr/log": "1.0.0",
+        "footstones/plumber" : "v0.4.5",
+        "robmorgan/phinx" : "v0.5.0"
+    }
+}

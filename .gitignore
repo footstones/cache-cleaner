@@ -1,0 +1,6 @@
+/vendor/
+/composer.phar
+/app/config.php
+/app/worker_config.php
+/var/log/*
+!.gitkeep

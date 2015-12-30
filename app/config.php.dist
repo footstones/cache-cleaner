@@ -1,0 +1,21 @@
+<?php
+return array(
+    'database' => array(
+        'driver' => 'pdo_mysql',
+        'host' => '127.0.0.1',
+        'port' => 3306,
+        'name' => 'cache_cleaner',
+        'user' => 'root',
+        'password' => '',
+        'charset' => 'utf8',
+    ),
+    'redis' => array(
+        'default' => array(
+            'host' => '127.0.0.1',
+            'port' => 6379,
+            'timeout' => 1,
+            'reserved' => null,
+            'retry_interval' => 100,
+        ),
+    ),
+);
