@@ -11,6 +11,8 @@ class CleanWorker implements IWorker
 
     protected $scopeRedis = [];
 
+    protected $connection;
+
     const DELAY = 2;
 
     public function __construct($tubeName, $config)
@@ -21,22 +23,13 @@ class CleanWorker implements IWorker
 
     public function execute($job)
     {
-
         try {
-            $config = $this->config['database'];
 
-            $connection = DriverManager::getConnection(array(
-                'dbname' => $config['name'],
-                'user' => $config['user'],
-                'password' => $config['password'],
-                'host' => $config['host'],
-                'driver' => $config['driver'],
-                'charset' => $config['charset'],
-            ));
+            $connection = $this->getConnection();
 
             $cursor = $this->getCursor();
 
-            $sql = "SELECT * FROM {$this->config['table']} WHERE id > $cursor ORDER BY id ASC LIMIT 100";
+            $sql = "SELECT * FROM {$this->config['table']} WHERE id > $cursor ORDER BY id ASC LIMIT 1";
 
             $flags = $connection->fetchAll($sql);
             if (empty($flags)) {
@@ -56,7 +49,9 @@ class CleanWorker implements IWorker
             $deletedNum = 0;
 
             foreach ($scopeKeys as $scope => $keys) {
-                $deletedNum += $this->getScopeRedis($scope)->del($keys);
+                $redis = $this->getScopeRedis($scope);
+                $deletedNum += $redis->del($keys);
+                $redis->close();
             }
 
             $lastFlag = end($flags);
@@ -64,7 +59,6 @@ class CleanWorker implements IWorker
             $this->saveCursor($lastFlag);
 
             end:
-            $connection->close();
 
             if ($lastFlag) {
                 $message = "Last cursor {$lastFlag['id']}, deleted cache key num: {$deletedNum}.";
@@ -80,6 +74,31 @@ class CleanWorker implements IWorker
             return array('code' => IWorker::RETRY, 'delay'=> self::DELAY);
         }
 
+    }
+
+    protected function getConnection()
+    {
+        if (empty($this->connection)) {
+            $config = $this->config['database'];
+
+            $this->connection = DriverManager::getConnection(array(
+                'dbname' => $config['name'],
+                'user' => $config['user'],
+                'password' => $config['password'],
+                'host' => $config['host'],
+                'driver' => $config['driver'],
+                'charset' => $config['charset'],
+            ));
+
+        }
+
+        if ($this->connection->ping() === false) {
+            $this->logger->info("mysql reconncetion. ");
+            $this->connection->close();
+            $this->connection->connect();
+        }
+
+        return $this->connection;
     }
 
     protected function getCursor()
@@ -98,14 +117,10 @@ class CleanWorker implements IWorker
 
     protected function getScopeRedis($scope)
     {
-        if (empty($this->scopeRedis[$scope])) {
             $redis = new \Redis();
             $config = $this->config['scops'][$scope];
             $redis->connect($config['host'], $config['port']);
-            $this->scopeRedis[$scope] = $redis;
-        }
-
-        return $this->scopeRedis[$scope];
+            return $redis;
     }
 
     public function setLogger(LoggerInterface $logger)
