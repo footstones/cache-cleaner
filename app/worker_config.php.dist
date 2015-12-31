@@ -19,6 +19,8 @@ return [
                 'password' => '',
                 'charset' => 'utf8',
             ],
+            'table' => 'flag',
+            'cursor_file' => __DIR__ . '/../var/log/cache_clean_cursor',
             'scops' => [
                 'default' => [
                     'host' => '127.0.0.1',
@@ -27,14 +29,13 @@ return [
                     'reserved' => null,
                     'retry_interval' => 100,
                 ]
-
             ]
         ],
     ],
     'log_path' => __DIR__ . '/../var/log/plumber.log',
     'output_path' => __DIR__ . '/../var/log/plumber.output.log',
     'pid_path' => __DIR__ . '/../var/log/plumber.pid',
-    'daemonize' => 1,
+    'daemonize' => 0,
     'reserve_timeout' => 10, 
     'execute_timeout' => 60,
 ];
