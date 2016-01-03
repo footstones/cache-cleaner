@@ -1,0 +1,29 @@
+{
+    "name": "footstones/plumber",
+    "type": "library",
+    "description": "A PHP Message Queue Worker.",
+    "keywords": ["plumber", "beanstalk", "message queue", "swoole"],
+    "homepage": "https://github.com/Footstones/Plumber",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": { 
+            "Footstones\\Plumber\\": "src/",
+            "Footstones\\Plumber\\Tests\\": "tests/",
+            "Footstones\\Plumber\\Example\\": "example/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Wellming Li",
+            "email": "wellming.li@howzhi.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.1",
+        "ext-swoole": ">=1.7.17",
+        "davidpersson/beanstalk" : "2.0.0",
+        "psr/log": "1.0.0"
+    },
+
+    "bin": ["bin/plumber"]
+}
