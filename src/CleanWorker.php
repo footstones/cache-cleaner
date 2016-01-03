@@ -29,7 +29,7 @@ class CleanWorker implements IWorker
 
             $cursor = $this->getCursor();
 
-            $sql = "SELECT * FROM {$this->config['table']} WHERE id > $cursor ORDER BY id ASC LIMIT 1";
+            $sql = "SELECT * FROM {$this->config['table']} WHERE id > $cursor ORDER BY id ASC LIMIT 100";
 
             $flags = $connection->fetchAll($sql);
             if (empty($flags)) {
