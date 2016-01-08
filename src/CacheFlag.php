@@ -34,9 +34,17 @@ class CacheFlag
         $flag['keyname'] = $key;
         $flag['createdTime'] = time();
 
+        if ($this->connection->ping() === false) {
+            $this->connection->close();
+            $this->connection->connect();
+        }
+
         $affected = $this->connection->insert($this->options['table'], $flag);
 
         return $affected > 0 ? true : false;
     }
+
+
+
 
 }
