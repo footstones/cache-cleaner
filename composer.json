@@ -24,8 +24,14 @@
         "php": ">=5.4.1",
         "ext-swoole": ">=1.7.17",
         "doctrine/dbal": ">=2.5.0",
-        "psr/log": "1.0.0",
+        "psr/log": "^1.0.0 || dev-master",
         "footstones/plumber" : ">=0.4.5",
         "robmorgan/phinx" : "v0.5.3"
+    },
+    "repositories": {
+        "packagist": {
+            "type": "composer",
+            "url": "https://packagist.phpcomposer.com"
+        }
     }
 }
