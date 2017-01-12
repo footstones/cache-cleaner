@@ -1,7 +1,7 @@
 <?php
 namespace Footstones\CacheCleaner;
 
-use Footstones\Plumber\IWorker;
+use Codeages\Plumber\IWorker;
 use Psr\Log\LoggerInterface;
 use Doctrine\DBAL\DriverManager;
 

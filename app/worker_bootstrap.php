@@ -2,9 +2,9 @@
 
 include dirname(__DIR__).'/vendor/autoload.php';
 
-use Footstones\Plumber\BeanstalkClient;
+use Codeages\Beanstalk\Client;
 
-$beanstalk = new BeanstalkClient(array_merge(
+$beanstalk = new Client(array_merge(
     $config['message_server'],
     ['persistent' => false]
 ));
